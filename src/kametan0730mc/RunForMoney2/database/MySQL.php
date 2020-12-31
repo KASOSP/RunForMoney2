@@ -283,4 +283,13 @@ class MySQL implements Database{
 		return $caches;
 	}
 
+	public function getUserRunForMoneyCachesOrderByCatchDESC(){
+		$result = $this->connection->query("SELECT `user_id`, `clear`, `death`, `catch`, `surrender`, `revival`, `max_result_id`, `updated_at` FROM `user_run_for_money_caches` ORDER BY `catch` DESC LIMIT 10");
+		$caches = [];
+		while($row = $result->fetch_assoc()){
+			$caches[] = new UserRunForMoneyCacheType((int) $row["user_id"], (int) $row["clear"], (int) $row["death"], (int) $row["catch"], (int) $row["surrender"], (int) $row["revival"], (int) $row["max_result_id"], $row["updated_at"]);
+		}
+		return $caches;
+	}
+
 }

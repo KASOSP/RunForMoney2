@@ -68,4 +68,8 @@ interface Database{
 	public function putUserRunForMoneyResult(UserRunForMoneyResultType $result);
 
 	public function getUserRunForMoneyResults(int $userId): array;
+
+	public function getUserMoneyCachesOrderByAmountDESC();
+	public function getUserRunForMoneyCachesOrderByClearDESC();
+	public function getUserRunForMoneyCachesOrderByCatchDESC();
 }

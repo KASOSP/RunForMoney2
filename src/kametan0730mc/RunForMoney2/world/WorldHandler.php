@@ -59,6 +59,13 @@ class WorldHandler{
 		$this->moneyRankingParticle->setText($moneyRanking);
 		$world->addParticle($this->moneyRankingPos, $this->moneyRankingParticle);
 
+		$particle = new PortalParticle();
+		for($x=0;$x<10;$x++){
+			for($z=0;$z<10;$z++){
+				$world->addParticle($this->moneyRankingPos->add(rand(-20,20)/10,rand(-20,20)/10,rand(-20,20)/10), $particle);
+			}
+		}
+
 		$clearCaches = $this->database->getUserRunForMoneyCachesOrderByClearDESC();
 		$clearRanking = "§a-------逃走成功回数ランキング-------\n";
 		foreach($clearCaches as $index => $cache){
@@ -68,7 +75,14 @@ class WorldHandler{
 		$this->clearRankingParticle->setText($clearRanking);
 		$world->addParticle($this->clearRankingPos, $this->clearRankingParticle);
 
-		$catchCaches = $this->database->getUserRunForMoneyCachesOrderByClearDESC();
+		$particle = new PortalParticle();
+		for($x=0;$x<10;$x++){
+			for($z=0;$z<10;$z++){
+				$world->addParticle($this->clearRankingPos->add(rand(-20,20)/10,rand(-20,20)/10,rand(-20,20)/10), $particle);
+			}
+		}
+
+		$catchCaches = $this->database->getUserRunForMoneyCachesOrderByCatchDESC();
 		$catchRanking = "§a-------捕獲回数ランキング-------\n";
 		foreach($catchCaches as $index => $cache){
 			$username = $this->database->getUserNameByUserId($cache->userId);
@@ -80,7 +94,7 @@ class WorldHandler{
 		$particle = new PortalParticle();
 		for($x=0;$x<10;$x++){
 			for($z=0;$z<10;$z++){
-				$world->addParticle($this->clearRankingPos->add(rand(-20,20)/10,rand(-20,20)/10,rand(-20,20)/10), $particle);
+				$world->addParticle($this->catchRankingPos->add(rand(-20,20)/10,rand(-20,20)/10,rand(-20,20)/10), $particle);
 			}
 		}
 	}
