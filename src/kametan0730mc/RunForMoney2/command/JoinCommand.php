@@ -41,7 +41,7 @@ class JoinCommand extends Command{
 			return true;
 		}
 
-		if($gameHandler->getGameInfo()->getGamerData($sender)->surrender !== 0){
+		if($gameHandler->getGameInfo()->hasGamerData($sender) and $gameHandler->getGameInfo()->getGamerData($sender)->surrender !== 0){
 			$userHandler->sendTranslatedMessage($sender, "command.join.fail", ERROR);
 			return true;
 		}
