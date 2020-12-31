@@ -43,7 +43,7 @@ class GameHandler{
 		$info = new GameInfo();
 		$info->status = GameInfo::GAME_STATUS_WAITING;
 		$info->time = 0;
-		$info->maxTime = 10;
+		$info->maxTime = 30;
 		$this->gameInfo = $info;
 	}
 
@@ -193,6 +193,7 @@ class GameHandler{
 		}
 
 		$this->gameInfo = null;
+		$this->startWaiting();
 	}
 
 	/**
