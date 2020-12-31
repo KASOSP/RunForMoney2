@@ -23,8 +23,10 @@ use kametan0730mc\RunForMoney2\command\JoinCommand;
 use kametan0730mc\RunForMoney2\command\MoneyCommand;
 use kametan0730mc\RunForMoney2\command\NametagCommand;
 use kametan0730mc\RunForMoney2\command\RemoveInventoryCommand;
+use kametan0730mc\RunForMoney2\command\SetPhotoStudioCommand;
 use kametan0730mc\RunForMoney2\command\SobaCommand;
 use kametan0730mc\RunForMoney2\command\SpawnCommand;
+use kametan0730mc\RunForMoney2\command\TeleportAllToMeCommand;
 use kametan0730mc\RunForMoney2\command\UnbanCommand;
 use kametan0730mc\RunForMoney2\crown\Crown;
 use kametan0730mc\RunForMoney2\database\Database;
@@ -128,6 +130,8 @@ class Main extends PluginBase{
 		$this->getServer()->getCommandMap()->register("kametan", new MoneyCommand("money"));
 		$this->getServer()->getCommandMap()->register("kametan", new SpawnCommand("spawn"));
 		$this->getServer()->getCommandMap()->register("kametan", new JoinCommand("join"));
+		$this->getServer()->getCommandMap()->register("kametan", new TeleportAllToMeCommand("tpa"));
+		$this->getServer()->getCommandMap()->register("kametan", new SetPhotoStudioCommand("setphotostudio"));
 	}
 
 	private function initEntities(){

@@ -31,5 +31,9 @@ permissions:
     default: op
   kametan.command.soba:
     default: op
+  kametan.command.tpa:
+      default: op
+  kametan.command.setphotostudio:
+    default: op
 
 ...

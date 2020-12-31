@@ -56,6 +56,9 @@ class UserHandler{
 	/** @var Vector3 */
 	private $spawnPoint;
 
+	/** @var Vector3 */
+	private $photoStudioPoint;
+
 	/** @var UserSaveData[]  */
 	private $saveDataRecords = []; // ユーザーIDがキー
 
@@ -114,6 +117,11 @@ class UserHandler{
 
 		$this->tempDataRecords[strtolower($player->getName())]->crowns = $this->database->getUserCrowns($userId);
 
+		if($this->photoStudioPoint !== null){
+			$player->teleport($this->photoStudioPoint);
+			$player->sendMessage(">> 撮影台に転送しました");
+		}
+
 		if(1==2){
 			$human = new Human(new Location(131, 72, -236, 180, 0, $player->getWorld()), $player->getSkin());
 			$human->lookAt($player->getLocation());
@@ -131,7 +139,6 @@ class UserHandler{
 			$particle = new FloatingTextParticle($text);
 			$player->getWorld()->addParticle(new Vector3(135, 72, -236), $particle);
 		}
-
 
 	}
 
@@ -267,7 +274,12 @@ class UserHandler{
 
 	public function respawn(Player $player){
 		$this->resetState($player);
-		$player->teleport($this->spawnPoint);
+		if($this->photoStudioPoint !== null){
+			$player->teleport($this->photoStudioPoint);
+			$player->sendMessage(">> 撮影台に転送しました");
+		}else{
+			$player->teleport($this->spawnPoint);
+		}
 	}
 
 	public function updateState(Player $player){
@@ -373,6 +385,10 @@ class UserHandler{
 	 */
 	public function getSpawnPoint(): Vector3{
 		return $this->spawnPoint;
+	}
+
+	public function setPhotoStudioPos(Vector3 $pos){
+		$this->photoStudioPoint = $pos;
 	}
 
 	/**
