@@ -34,6 +34,10 @@ class GameCommand extends Command{
 				GameHandler::getInstance()->startWaiting();
 				UserHandler::getInstance()->sendTranslatedMessage($sender, "command.game.startCountdown", MESSAGE);
 				break;
+			case "stop": // 必ず待機時間に使う
+				GameHandler::getInstance()->stopGame();
+				UserHandler::getInstance()->sendTranslatedMessage($sender, "command.game.stop", MESSAGE);
+				break;
 		}
 		return true;
 

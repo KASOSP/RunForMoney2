@@ -47,6 +47,10 @@ class GameHandler{
 		$this->gameInfo = $info;
 	}
 
+	public function stopGame(){
+		$this->gameInfo = null;
+	}
+
 	/**
 	 * ゲームを開始します
 	 */
