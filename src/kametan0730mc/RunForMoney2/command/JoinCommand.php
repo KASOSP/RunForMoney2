@@ -32,23 +32,23 @@ class JoinCommand extends Command{
 		$userHandler = UserHandler::getInstance();
 		$gameHandler = GameHandler::getInstance();
 		if(!$gameHandler->isGameRunning() or $gameHandler->isFinalPhase()){
-			$userHandler->sendTranslatedMessage($sender, "command.join.fail", ERROR);
+			$userHandler->sendTranslatedMessage($sender, "game.join.fail", ERROR);
 			return true;
 		}
 
 		if($gameHandler->getGameInfo()->hasGamerData($sender) and $gameHandler->getGameInfo()->getGamerData($sender)->gamerType !== GamerData::GAMER_TYPE_WAITING){
-			$userHandler->sendTranslatedMessage($sender, "command.join.fail", ERROR);
+			$userHandler->sendTranslatedMessage($sender, "game.join.fail", ERROR);
 			return true;
 		}
 
 		if($gameHandler->getGameInfo()->hasGamerData($sender) and $gameHandler->getGameInfo()->getGamerData($sender)->surrender !== 0){
-			$userHandler->sendTranslatedMessage($sender, "command.join.fail", ERROR);
+			$userHandler->sendTranslatedMessage($sender, "game.join.fail", ERROR);
 			return true;
 		}
 		$gameHandler->getGameInfo()->initGamerData($sender);
 		$gameHandler->getGameInfo()->getGamerData($sender)->gamerType = GamerData::GAMER_TYPE_CAUGHT;
 		$sender->teleport($gameHandler->getGameInfo()->field->getJailPoint());
-		$userHandler->sendTranslatedMessage($sender, "command.join.success", MESSAGE);
+		$userHandler->sendTranslatedMessage($sender, "game.join.success", MESSAGE);
 		$userHandler->updateState($sender);
 		return true;
 	}

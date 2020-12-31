@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace kametan0730mc\RunForMoney2\form;
 
+use kametan0730mc\RunForMoney2\game\GameHandler;
+use kametan0730mc\RunForMoney2\game\GamerData;
 use kametan0730mc\RunForMoney2\lang\Lang;
 use kametan0730mc\RunForMoney2\user\UserHandler;
 use pocketmine\player\Player;
@@ -21,6 +23,33 @@ class TeleportForm extends UserForm{
 			case 0:
 				UserHandler::getInstance()->respawn($player);
 				UserHandler::getInstance()->sendTranslatedMessage($player, "command.spawn.success", MESSAGE);
+				break;
+			case 1:
+				//UserHandler::getInstance()->respawn($player);
+				//UserHandler::getInstance()->sendTranslatedMessage($player, "command.spawn.success", MESSAGE);
+				break;
+			case 2:
+				$userHandler = UserHandler::getInstance();
+				$gameHandler = GameHandler::getInstance();
+				if(!$gameHandler->isGameRunning() or $gameHandler->isFinalPhase()){
+					$userHandler->sendTranslatedMessage($player, "game.join.fail", ERROR);
+					return;
+				}
+
+				if($gameHandler->getGameInfo()->hasGamerData($player) and $gameHandler->getGameInfo()->getGamerData($player)->gamerType !== GamerData::GAMER_TYPE_WAITING){
+					$userHandler->sendTranslatedMessage($player, "game.join.fail", ERROR);
+					return;
+				}
+
+				if($gameHandler->getGameInfo()->hasGamerData($player) and $gameHandler->getGameInfo()->getGamerData($player)->surrender !== 0){
+					$userHandler->sendTranslatedMessage($player, "game.join.fail", ERROR);
+					return;
+				}
+				$gameHandler->getGameInfo()->initGamerData($player);
+				$gameHandler->getGameInfo()->getGamerData($player)->gamerType = GamerData::GAMER_TYPE_CAUGHT;
+				$player->teleport($gameHandler->getGameInfo()->field->getJailPoint());
+				$userHandler->sendTranslatedMessage($player, "game.join.success", MESSAGE);
+				$userHandler->updateState($player);
 				break;
 
 		}
