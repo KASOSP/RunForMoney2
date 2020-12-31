@@ -55,5 +55,4 @@ class UserMoneyTransactionType{
 		$this->amount = $amount;
 		$this->data = $data;
 	}
-
 }

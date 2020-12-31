@@ -23,6 +23,7 @@ use kametan0730mc\RunForMoney2\command\JoinCommand;
 use kametan0730mc\RunForMoney2\command\MoneyCommand;
 use kametan0730mc\RunForMoney2\command\NametagCommand;
 use kametan0730mc\RunForMoney2\command\RemoveInventoryCommand;
+use kametan0730mc\RunForMoney2\command\SobaCommand;
 use kametan0730mc\RunForMoney2\command\SpawnCommand;
 use kametan0730mc\RunForMoney2\command\UnbanCommand;
 use kametan0730mc\RunForMoney2\crown\Crown;
@@ -120,9 +121,10 @@ class Main extends PluginBase{
 		$this->getServer()->getCommandMap()->register("kametan", new CleanEntityCommand("cleanentity"));
 		$this->getServer()->getCommandMap()->register("kametan", new GameCommand("game"));
 		$this->getServer()->getCommandMap()->register("kametan", new UnbanCommand("unban"));
-
+		$this->getServer()->getCommandMap()->unregister($this->getServer()->getCommandMap()->getCommand("ban"));
 		$this->getServer()->getCommandMap()->register("kametan", new NametagCommand("nametag"));
 		$this->getServer()->getCommandMap()->register("kametan", new RemoveInventoryCommand("removeinventory"));
+		$this->getServer()->getCommandMap()->register("kametan", new SobaCommand("soba"));
 		$this->getServer()->getCommandMap()->register("kametan", new MoneyCommand("money"));
 		$this->getServer()->getCommandMap()->register("kametan", new SpawnCommand("spawn"));
 		$this->getServer()->getCommandMap()->register("kametan", new JoinCommand("join"));

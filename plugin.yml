@@ -29,5 +29,7 @@ permissions:
     default: op
   kametan.command.unban:
     default: op
+  kametan.command.soba:
+    default: op
 
 ...
