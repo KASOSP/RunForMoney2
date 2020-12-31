@@ -1,0 +1,18 @@
+{
+	"name": "kametan0730mc/runformoney2",
+	"description": "A run for money plugin for PocketMine-MP",
+	"minimum-stability": "dev",
+	"license": "LGPL-3.0",
+	"authors": [
+		{
+			"name": "kametan0730mc",
+			"email": "kametan0730@gmail.com"
+		}
+	],
+	"require-dev": {
+		"php": ">=7.4.0",
+		"pocketmine/pocketmine-mp": "master",
+		"ext-mysqli": "*",
+		"ext-json": "*"
+	}
+}

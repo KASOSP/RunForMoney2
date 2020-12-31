@@ -1,0 +1,33 @@
+---
+name: RunForMoney2
+version: 1.0.0
+author: kametan0730mc
+main: kametan0730mc\RunForMoney2\Main
+api: 4.0.0
+permissions:
+  kametan.command.chunkinfo:
+    default: op
+  kametan.command.crowntest:
+    default: op
+  kametan.command.lightningtest:
+    default: op
+  kametan.command.myxuid:
+    default: op
+  kametan.command.savedatadump:
+    default: op
+  kametan.command.scanworldsurface:
+    default: op
+  kametan.command.setbaseblock:
+    default: op
+  kametan.command.soundtest:
+    default: op
+  kametan.command.ban:
+    default: op
+  kametan.command.cleanentity:
+    default: op
+  kametan.command.game:
+    default: op
+  kametan.command.unban:
+    default: op
+
+...
