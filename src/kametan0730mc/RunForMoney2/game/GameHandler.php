@@ -99,19 +99,18 @@ class GameHandler{
 		foreach($gamers as $gamer){
 			switch($this->gameInfo->getGamerData($gamer)->gamerType){
 				case GamerData::GAMER_TYPE_RUNNER:
-					$gamer->getEffects()->add(new EffectInstance(VanillaEffects::SPEED(), 40 * 20, 1, false));
+					$gamer->getEffects()->add(new EffectInstance(VanillaEffects::INVISIBILITY(), 40 * 20, 1, false));
+					$gamer->getEffects()->add(new EffectInstance(VanillaEffects::SPEED(), 20 * 20, 1, false));
 					$gamer->teleport($field->getRunnerRandomSpawnPoint());
 					$userHandler->sendTranslatedMessage($gamer, "game.start.runner.message", MESSAGE);
 					$userHandler->sendTranslatedTitle($gamer, "game.start.runner.title", null, TextFormat::RED, null);
 					break;
 				case GamerData::GAMER_TYPE_HUNTER:
-					//$gamer->getEffects()->add(new EffectInstance(VanillaEffects::SLOWNESS(), 40 * 20, 1, false));
 					$gamer->teleport($field->getHunterSpawnPoint());
 					$userHandler->sendTranslatedMessage($gamer, "game.start.hunter.message", MESSAGE);
 					$userHandler->sendTranslatedTitle($gamer, "game.start.hunter.title", null, TextFormat::RED, null);
 					break;
 				case GamerData::GAMER_TYPE_BETRAYAL:
-					//$gamer->getEffects()->add(new EffectInstance(VanillaEffects::SLOWNESS(), 40 * 20, 1, false));
 					$gamer->teleport($field->getBetrayerSpawnPoint());
 					$userHandler->sendTranslatedMessage($gamer, "game.start.betrayer.1", MESSAGE);
 					$userHandler->sendTranslatedMessage($gamer, "game.start.betrayer.2", MESSAGE);
