@@ -264,7 +264,7 @@ class GameHandler{
 	public function successSurrender(Player $player){
 		$userHandler = UserHandler::getInstance();
 		$gamerData = $this->gameInfo->getGamerData($player);
-		$userHandler->sendTranslatedMessage($player, 'game.surrender.success', MESSAGE, [$gamerData->surrenderCountDown]);
+		$userHandler->sendTranslatedMessage($player, 'game.surrender.success', MESSAGE, [$gamerData->money]);
 		$this->database->putUserMoneyTransaction(
 			new UserMoneyTransactionType(
 				null,
