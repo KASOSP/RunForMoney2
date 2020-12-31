@@ -117,29 +117,6 @@ class UserHandler{
 
 		$this->tempDataRecords[strtolower($player->getName())]->crowns = $this->database->getUserCrowns($userId);
 
-		if($this->photoStudioPoint !== null){
-			$player->teleport($this->photoStudioPoint);
-			$player->sendMessage(">> 撮影台に転送しました");
-		}
-
-		if(1==2){
-			$human = new Human(new Location(131, 72, -236, 180, 0, $player->getWorld()), $player->getSkin());
-			$human->lookAt($player->getLocation());
-			$human->spawnTo($player);
-
-			$status = $this->getUserRunForMoneyStatus($userId);
-			$clear = $status[0];
-			$death = $status[1];
-			$catch = $status[2];
-			$surrender = $status[3];
-			$revival = $status[4];
-			$exp = $clear * 20 + $death * 5 + $surrender * 12 + $catch * 8 + $revival + 100;
-			$lev = floor($exp / 99);
-			$text = "§a" . $player->getName() . "さんのステータス\n§eレベル : " . $lev . "\n§dExp : " . $exp . "\n" . "§b逃走成功回数 : " . $clear . " \n§c自首回数  : " . $surrender . "\n" . "§2復活回数  : " . $revival . "\n" . "§d確保された回数 : " . $death . "\n§e所持金 : " . (0) . "\n§1確保した回数 : " . $catch . "\n§aログイン時間(分) : " . (999) . "\n§0ここの表示はログイン中は更新されません";
-			$particle = new FloatingTextParticle($text);
-			$player->getWorld()->addParticle(new Vector3(135, 72, -236), $particle);
-		}
-
 	}
 
 	public function joinEvent(Player $player){

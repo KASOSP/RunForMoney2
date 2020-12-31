@@ -124,7 +124,6 @@ class MySQL implements Database{
 		return new UserMoneyCacheType($userId, $amount, $maxTransactionId, $updatedAt);
 	}
 
-
 	/**
 	 * @param UserMoneyTransactionType $transaction
 	 */
