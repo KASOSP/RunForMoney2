@@ -47,7 +47,7 @@ class ItemBuyForm extends UserForm{
 			$userHandler->sendTranslatedMessage($player, "form.invalid.message", ERROR);
 			return;
 		}
-		$totalCost = $count*$this->itemCost;
+		$totalCost = (int) $count*$this->itemCost;
 
 		$userId = $userHandler->getUserIdByUser($player);
 

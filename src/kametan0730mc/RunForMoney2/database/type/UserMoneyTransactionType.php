@@ -46,9 +46,9 @@ class UserMoneyTransactionType{
 	 * @param int $userId
 	 * @param int $type
 	 * @param int $amount
-	 * @param string|null $data
+	 * @param string $data
 	 */
-	public function __construct(?int $id, int $userId, int $type, int $amount, ?string $data){
+	public function __construct(?int $id, int $userId, int $type, int $amount, string $data=""){
 		$this->id = $id;
 		$this->userId = $userId;
 		$this->type = $type;
@@ -56,11 +56,4 @@ class UserMoneyTransactionType{
 		$this->data = $data;
 	}
 
-
-	/**
-	 * @param string $data
-	 */
-	public function setGameIdInData(int $gameId): void{
-		$this->data.= "game_id:" . $gameId . ";";
-	}
 }

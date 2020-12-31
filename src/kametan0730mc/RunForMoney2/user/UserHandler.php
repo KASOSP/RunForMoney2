@@ -237,7 +237,7 @@ class UserHandler{
 	}
 
 	public function addUserMoney(int $userId, int $amount, int $type){
-		$this->database->putUserMoneyTransaction(new UserMoneyTransactionType(null, $userId, $amount, $type, null));
+		$this->database->putUserMoneyTransaction(new UserMoneyTransactionType(null, $userId, $type, $amount));
 	}
 
 	public function updateUserPassword($userId, $hashedPassword){
