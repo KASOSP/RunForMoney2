@@ -38,6 +38,7 @@ use kametan0730mc\RunForMoney2\entity\projectile\FishingHook;
 use kametan0730mc\RunForMoney2\game\field\FieldLoader;
 use kametan0730mc\RunForMoney2\game\GameHandler;
 use kametan0730mc\RunForMoney2\game\mission\MissionLoader;
+use kametan0730mc\RunForMoney2\handler\BehaviorPacksHandler;
 use kametan0730mc\RunForMoney2\item\Amazon;
 use kametan0730mc\RunForMoney2\item\CellPhone;
 use kametan0730mc\RunForMoney2\item\DoorKey;
@@ -51,6 +52,7 @@ use kametan0730mc\RunForMoney2\item\ExMedicine4;
 use kametan0730mc\RunForMoney2\item\ExMedicine5;
 use kametan0730mc\RunForMoney2\item\ExMedicineS;
 use kametan0730mc\RunForMoney2\item\IceGun;
+use kametan0730mc\RunForMoney2\item\ItemLoader;
 use kametan0730mc\RunForMoney2\item\Lollipop;
 use kametan0730mc\RunForMoney2\item\MenuPad;
 use kametan0730mc\RunForMoney2\item\NetGun;
@@ -253,6 +255,7 @@ class Main extends PluginBase{
 		Lang::init();
 		FieldLoader::init();
 		MissionLoader::init();
+		ItemLoader::init($this->getDataFolder());
 
 		$this->initEntities();
 		$this->initItems();
@@ -282,6 +285,7 @@ class Main extends PluginBase{
 		WorldHandler::getInstance()->init($this->database);
 
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+		$this->getServer()->getPluginManager()->registerEvents(new BehaviorPacksHandler(), $this);
 		$this->getScheduler()->scheduleRepeatingTask(new MainTask($this), 2); // 0.25s
 	}
 

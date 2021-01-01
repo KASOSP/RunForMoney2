@@ -24,6 +24,7 @@ use pocketmine\nbt\tag\ListTag;
 use pocketmine\network\mcpe\protocol\PlayerActionPacket;
 use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataFlags;
 use pocketmine\player\Player;
+use pocketmine\scheduler\ClosureTask;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
@@ -38,8 +39,13 @@ class EventListener implements Listener{
 	}
 
 	public function onPlayerJoin(PlayerJoinEvent $event){
+		$player = $event->getPlayer();
 		$event->setJoinMessage(null);
-		UserHandler::getInstance()->joinEvent($event->getPlayer());
+		UserHandler::getInstance()->joinEvent($player);
+
+		$this->getScheduler()->scheduleDelayedTask(new ClosureTask(function(int $currentTick = 1) use ($player): void{
+			$player->getNetworkSession()->getInvManager()->syncContents($player->getInventory());
+		}), 1);
 	}
 
 	public function onPlayerQuit(PlayerQuitEvent $event){
