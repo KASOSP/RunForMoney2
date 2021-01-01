@@ -24,6 +24,12 @@ class RabbitFoot extends AdditionalItem{
 			$userHandler->sendTranslatedMessage($player, "item.use.fail.outOfGame", ERROR);
 			return ItemUseResult::FAIL();
 		}
+
+		if(!$gameHandler->getGameInfo()->hasGamerData($player)){
+			$userHandler->sendTranslatedMessage($player, "item.use.fail.onlyForGamer", ERROR);
+			return ItemUseResult::FAIL();
+		}
+
 		$gamerType = $gameHandler->getGameInfo()->getGamerData($player)->gamerType;
 		if($gamerType !== GamerData::GAMER_TYPE_RUNNER and $gamerType !== GamerData::GAMER_TYPE_HUNTER and $gamerType !== GamerData::GAMER_TYPE_BETRAYAL){
 			$userHandler->sendTranslatedMessage($player, "item.use.fail.onlyForGamer", ERROR);

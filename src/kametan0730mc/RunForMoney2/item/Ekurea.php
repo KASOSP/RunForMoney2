@@ -24,7 +24,7 @@ class Ekurea extends AdditionalItem{
 			$userHandler->sendTranslatedMessage($player, "item.use.fail.outOfGame", ERROR);
 			return ItemUseResult::FAIL();
 		}
-		if($gameHandler->getGameInfo()->getGamerData($player)->gamerType !== GamerData::GAMER_TYPE_RUNNER){
+		if(!$gameHandler->getGameInfo()->hasGamerData($player) or $gameHandler->getGameInfo()->getGamerData($player)->gamerType !== GamerData::GAMER_TYPE_RUNNER){
 			$userHandler->sendTranslatedMessage($player, "item.use.fail.onlyForRunner", ERROR);
 			return ItemUseResult::FAIL();
 		}
