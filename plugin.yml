@@ -7,8 +7,6 @@ api: 4.0.0
 permissions:
   kametan.command.chunkinfo:
     default: op
-  kametan.command.crowntest:
-    default: op
   kametan.command.lightningtest:
     default: op
   kametan.command.myxuid:

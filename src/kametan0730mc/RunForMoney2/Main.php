@@ -110,7 +110,6 @@ class Main extends PluginBase{
 
 		if($isDevelopment){
 			$this->getServer()->getCommandMap()->register("kametan", new ChunkInfoCommand("chunkinfo"));
-			$this->getServer()->getCommandMap()->register("kametan", new CrownTestCommand("crowntest"));
 			$this->getServer()->getCommandMap()->register("kametan", new LightningTestCommand("lightningtest"));
 			$this->getServer()->getCommandMap()->register("kametan", new MyXuidCommand("myxuid"));
 			$this->getServer()->getCommandMap()->register("kametan", new SaveDataDumpCommand("savedatadump"));
