@@ -64,4 +64,8 @@ class Lang{
 			return $translated;
 		}
 	}
+
+	public static function getLangList(){
+		return array_keys(self::$lang);
+	}
 }

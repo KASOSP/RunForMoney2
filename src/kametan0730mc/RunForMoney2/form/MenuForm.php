@@ -46,7 +46,7 @@ class MenuForm extends UserForm{
 				$player->sendForm(new ItemShopForm($this->lang));
 				break;
 			case 2:
-				$player->sendForm(new SettingForm($this->lang));
+				$player->sendForm(new SettingForm($this->lang, $player));
 				break;
 			case 3:
 				$player->sendForm(new PasswordRegisterForm($this->lang));
