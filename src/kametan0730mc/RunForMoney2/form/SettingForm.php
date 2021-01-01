@@ -11,10 +11,19 @@ use pocketmine\player\Player;
 class SettingForm extends UserForm{
 
 	public function handleResponse(Player $player, $data): void{
-		// TODO: Implement handleResponse() method.
+		return;
 	}
 
 	public function jsonSerialize(){
-		// TODO: Implement jsonSerialize() method.
+		return[
+		    "type" => "custom_form",
+		    "title" => "設定",
+		    "contents" => [
+			[
+			    'type' => 'label',
+                            'text' => '作成中です。'
+			]	
+	            ]
+		];
 	}
 }
