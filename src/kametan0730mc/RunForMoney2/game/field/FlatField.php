@@ -34,8 +34,16 @@ abstract class FlatField implements Field{
 		$mapData = $this->loadMapData($fileName);
 		$xOffset = $mapData["xOffset"];
 		$zOffset = $mapData["zOffset"];
+		$xSize = $mapData["xSize"];
+		$zSize = $mapData["zSize"];
 		foreach($mapData["data"] as $x => $zList){
+			if($x <= 15 or $x >= $xSize-15){
+				continue;
+			}
 			foreach($zList as $z => $block){
+				if($z <= 15 or $z >= $zSize-15){
+					continue;
+				}
 				$y = $block[0];
 				$id = $block[1];
 				$meta = $block[2];
