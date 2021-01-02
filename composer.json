@@ -10,9 +10,11 @@
 		}
 	],
 	"require-dev": {
+		"pocketmine/pocketmine-mp": "master"
+	},
+	"require": {
 		"php": ">=7.4.0",
-		"pocketmine/pocketmine-mp": "master",
-		"ext-mysqli": "*",
-		"ext-json": "*"
+		"ext-json": "*",
+		"ext-mysqli": "*"
 	}
 }
