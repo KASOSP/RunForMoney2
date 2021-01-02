@@ -83,7 +83,7 @@ class GameHandler{
 		while(($hunterCount+$betrayerCount) < (int) ceil(count($gamers)/10)){
 			foreach($gamers as $gamer){
 				if($this->gameInfo->getGamerData($gamer)->gamerType === GamerData::GAMER_TYPE_RUNNER){
-					if(mt_rand(0, 30) === 20){
+					if(mt_rand(0, 25) === 20){
 						$this->gameInfo->getGamerData($gamer)->gamerType = GamerData::GAMER_TYPE_HUNTER;
 						$hunterCount++;
 					}elseif(mt_rand(0, 1000) === 300){
