@@ -102,7 +102,7 @@ class WorldHandler{
 	private $seconds = 0;
 	public function second(){
 		$this->seconds++;
-		if($this->seconds % 10 === 0){
+		if($this->seconds % 60 === 0){
 			$this->update();
 		}
 	}
