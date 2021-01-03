@@ -40,4 +40,7 @@ class UserTempData{
 	/** @var UserCrownType[]  */
 	public $crowns = [];
 
+	/** @var int */
+	public $userStatusDisplayEntityId;
+
 }

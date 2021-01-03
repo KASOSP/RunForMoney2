@@ -117,6 +117,7 @@ class UserHandler{
 
 		$this->tempDataRecords[strtolower($player->getName())]->crowns = $this->database->getUserCrowns($userId);
 
+		$this->tempDataRecords[strtolower($player->getName())]->userStatusDisplayEntityId = Entity::nextRuntimeId();
 	}
 
 	public function joinEvent(Player $player){
@@ -133,35 +134,7 @@ class UserHandler{
 
 		$sound = new AnvilUseSound();
 		$player->getWorld()->addSound($player->getLocation(), $sound);
-
-		$status = $this->getUserRunForMoneyStatus($this->getUserIdByUser($player));
-		$clear = $status[0];
-		$death = $status[1];
-		$catch = $status[2];
-		$surrender = $status[3];
-		$revival = $status[4];
-		$text = "§a" . $player->getName() . "さんのステータス\n§b逃走成功回数 : " . $clear . " \n§c自首回数  : " . $surrender . "\n" . "§2復活回数  : " . $revival . "\n" . "§d確保された回数 : " . $death . "\n§e所持金 : " . (0) . "\n§1確保した回数 : " . $catch . "\n§aログイン時間(分) : " . (999);
-
-		$entityId = Entity::nextRuntimeId();
-		$uuid = UUID::fromRandom();
-		$name = $text;
-		$player->getNetworkSession()->sendDataPacket(PlayerListPacket::add([PlayerListEntry::createAdditionEntry($uuid, $entityId, $name, SkinAdapterSingleton::get()->toSkinData($player->getSkin()))]));
-		$pk = new AddPlayerPacket();
-		$pk->uuid = $uuid;
-		$pk->username = $name;
-		$pk->entityRuntimeId = $entityId;
-		$pk->position = new Vector3(132.5, 73, -236);
-		$pk->item = ItemStack::null();
-		$flags = (
-			1 << EntityMetadataFlags::IMMOBILE
-		);
-		$pk->metadata = [
-			EntityMetadataProperties::FLAGS => new LongMetadataProperty($flags),
-			EntityMetadataProperties::SCALE => new FloatMetadataProperty(0.01) //zero causes problems on debug builds
-		];
-		$player->getNetworkSession()->sendDataPacket($pk);
-		$player->getNetworkSession()->sendDataPacket(PlayerListPacket::remove([PlayerListEntry::createRemovalEntry($uuid)]));
-
+		$this->updateStatusDisplay($player);
 	}
 
 	public function quitEvent(Player $player){
@@ -198,6 +171,36 @@ class UserHandler{
 		}else{
 			$userTempData->interactRestrictionCount = 4; // 0.4s
 		}
+	}
+
+	public function updateStatusDisplay(Player $player){
+		$status = $this->getUserRunForMoneyStatus($this->getUserIdByUser($player));
+		$clear = $status[0];
+		$death = $status[1];
+		$catch = $status[2];
+		$surrender = $status[3];
+		$revival = $status[4];
+		$text = "§a" . $player->getName() . "さんのステータス\n§b逃走成功回数 : " . $clear . " \n§c自首回数  : " . $surrender . "\n" . "§2復活回数  : " . $revival . "\n" . "§d確保された回数 : " . $death . "\n§e所持金 : " . (0) . "\n§1確保した回数 : " . $catch . "\n§aログイン時間(分) : " . (999);
+
+		$entityId = $this->getTempData($player)->userStatusDisplayEntityId;
+		$uuid = UUID::fromRandom();
+		$name = $text;
+		$player->getNetworkSession()->sendDataPacket(PlayerListPacket::add([PlayerListEntry::createAdditionEntry($uuid, $entityId, $name, SkinAdapterSingleton::get()->toSkinData($player->getSkin()))]));
+		$pk = new AddPlayerPacket();
+		$pk->uuid = $uuid;
+		$pk->username = $name;
+		$pk->entityRuntimeId = $entityId;
+		$pk->position = new Vector3(132.5, 73, -236);
+		$pk->item = ItemStack::null();
+		$flags = (
+			1 << EntityMetadataFlags::IMMOBILE
+		);
+		$pk->metadata = [
+			EntityMetadataProperties::FLAGS => new LongMetadataProperty($flags),
+			EntityMetadataProperties::SCALE => new FloatMetadataProperty(0.01)
+		];
+		$player->getNetworkSession()->sendDataPacket($pk);
+		$player->getNetworkSession()->sendDataPacket(PlayerListPacket::remove([PlayerListEntry::createRemovalEntry($uuid)]));
 	}
 
 	/**
@@ -335,6 +338,11 @@ class UserHandler{
 			$rand = mt_rand(0, 10);
 			foreach(Server::getInstance()->getOnlinePlayers() as $player){
 				$this->sendTranslatedMessage($player, "server.regularly." . $rand, INFO);
+			}
+			if($this->count % 600 === 0){
+				foreach(Server::getInstance()->getOnlinePlayers() as $player){
+					$this->updateStatusDisplay($player);
+				}
 			}
 		}
 
