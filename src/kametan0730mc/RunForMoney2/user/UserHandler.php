@@ -177,6 +177,11 @@ class UserHandler{
 	public function chatEvent(PlayerChatEvent $event){
 		$player = $event->getPlayer();
 		$tempData = $this->getTempData($player);
+		if(mb_strlen($event->getMessage()) > 30){
+			$this->sendTranslatedMessage($player, "system.chat.tooLong", ERROR);
+			$event->cancel();
+			return;
+		}
 		if(!Server::getInstance()->isOp($player->getName()) and $tempData->chatRestrictionSeconds !== 0){
 			$this->sendTranslatedMessage($player, "system.chat.consecutivePosts", ERROR);
 			$event->cancel();
