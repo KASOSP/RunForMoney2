@@ -122,7 +122,6 @@ class Main extends PluginBase{
 		$this->getServer()->getCommandMap()->register("kametan", new CleanEntityCommand("cleanentity"));
 		$this->getServer()->getCommandMap()->register("kametan", new GameCommand("game"));
 		$this->getServer()->getCommandMap()->register("kametan", new UnbanCommand("unban"));
-		$this->getServer()->getCommandMap()->unregister($this->getServer()->getCommandMap()->getCommand("ban"));
 		$this->getServer()->getCommandMap()->register("kametan", new NametagCommand("nametag"));
 		$this->getServer()->getCommandMap()->register("kametan", new RemoveInventoryCommand("removeinventory"));
 		$this->getServer()->getCommandMap()->register("kametan", new SobaCommand("soba"));

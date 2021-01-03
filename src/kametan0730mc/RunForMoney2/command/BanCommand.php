@@ -16,7 +16,7 @@ class BanCommand extends Command{
 		parent::__construct(
 			$name,
 			"Add player to blacklist",
-			"/kick <player> <reason>"
+			"/ban <player> <reason>"
 		);
 		$this->setPermission("kametan.command.ban");
 	}
@@ -29,7 +29,7 @@ class BanCommand extends Command{
 			if($sender instanceof Player){
 				UserHandler::getInstance()->sendTranslatedMessage($sender, "command.ban.usage", ERROR);
 			}else{
-				$sender->sendMessage("Usage : /kick <player> <reason>");
+				$sender->sendMessage("Usage : /ban <player> <reason>");
 			}
 			return true;
 		}
