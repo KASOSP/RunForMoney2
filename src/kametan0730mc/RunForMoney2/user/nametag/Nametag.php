@@ -1,6 +1,6 @@
 <?php
 
-namespace kametan0730mc\RunForMoney2\nametag;
+namespace kametan0730mc\RunForMoney2\user\nametag;
 
 use kametan0730mc\RunForMoney2\user\UserHandler;
 use pocketmine\player\Player;

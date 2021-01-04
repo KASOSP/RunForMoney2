@@ -6,7 +6,7 @@ namespace kametan0730mc\RunForMoney2\form;
 
 
 use kametan0730mc\RunForMoney2\lang\Lang;
-use kametan0730mc\RunForMoney2\nametag\Nametag;
+use kametan0730mc\RunForMoney2\user\nametag\Nametag;
 use kametan0730mc\RunForMoney2\user\UserHandler;
 use pocketmine\form\FormValidationException;
 use pocketmine\player\Player;

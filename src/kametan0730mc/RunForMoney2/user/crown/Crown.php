@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-namespace kametan0730mc\RunForMoney2\crown;
-
-
-use pocketmine\utils\TextFormat;
+namespace kametan0730mc\RunForMoney2\user\crown;
 
 class Crown{
 

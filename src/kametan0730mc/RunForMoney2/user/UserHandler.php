@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace kametan0730mc\RunForMoney2\user;
 
-use kametan0730mc\RunForMoney2\crown\Crown;
+use kametan0730mc\RunForMoney2\user\crown\Crown;
 use kametan0730mc\RunForMoney2\database\Database;
 use kametan0730mc\RunForMoney2\database\type\BannedUserType;
 use kametan0730mc\RunForMoney2\form\PasswordRegisterForm;
