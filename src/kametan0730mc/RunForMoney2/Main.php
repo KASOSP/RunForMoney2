@@ -210,7 +210,7 @@ class Main extends PluginBase{
 		EnchantmentIdMap::getInstance()->register(EnchantmentIds::SHARPNESS, VanillaEnchantments::THORNS());
 	}
 
-	protected function onEnable(){
+	protected function onEnable() : void{
 		date_default_timezone_set("Japan");
 
 		$this->getServer()->getWorldManager()->setAutoSave(false);
