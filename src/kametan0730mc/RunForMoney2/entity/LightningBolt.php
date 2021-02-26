@@ -29,5 +29,4 @@ class LightningBolt extends Entity{
 		}
 		return false;
 	}
-
 }
