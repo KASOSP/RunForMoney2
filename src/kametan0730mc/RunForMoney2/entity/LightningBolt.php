@@ -6,6 +6,7 @@ namespace kametan0730mc\RunForMoney2\entity;
 
 
 use pocketmine\entity\Entity;
+use pocketmine\entity\EntitySizeInfo;
 use pocketmine\entity\Living;
 use pocketmine\network\mcpe\protocol\types\entity\EntityIds;
 
@@ -30,4 +31,7 @@ class LightningBolt extends Entity{
 		}
 		return false;
 	}
+
+	protected function getInitialSizeInfo() : EntitySizeInfo{ return new EntitySizeInfo($this->height, $this->width); }
+
 }

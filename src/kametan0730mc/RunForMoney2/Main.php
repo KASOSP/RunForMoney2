@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace kametan0730mc\RunForMoney2;
 
-use InvalidStateException;
 use kametan0730mc\RunForMoney2\block\Coal;
 use kametan0730mc\RunForMoney2\block\Door;
 use kametan0730mc\RunForMoney2\block\Lapis;
@@ -133,19 +132,19 @@ class Main extends PluginBase{
 	private function initEntities(){
 		/** @var EntityFactory $factory */
 		$factory = EntityFactory::getInstance();
-		$factory->register(Agent::class, function(World $world, CompoundTag $nbt) : Agent{
+		$factory->register(Agent::class, function(World $world, CompoundTag $nbt): Agent{
 			return new Agent(EntityDataHelper::parseLocation($nbt, $world), $nbt);
 		}, ['Agent', EntityIds::AGENT], EntityLegacyIds::AGENT);
 
-		$factory->register(LightningBolt::class, function(World $world, CompoundTag $nbt) : LightningBolt{
+		$factory->register(LightningBolt::class, function(World $world, CompoundTag $nbt): LightningBolt{
 			return new LightningBolt(EntityDataHelper::parseLocation($nbt, $world), $nbt);
 		}, ['Lightning Bolt', EntityIds::LIGHTNING_BOLT], EntityLegacyIds::LIGHTNING_BOLT);
 
-		$factory->register(DragonFireball::class, function(World $world, CompoundTag $nbt) : DragonFireball{
+		$factory->register(DragonFireball::class, function(World $world, CompoundTag $nbt): DragonFireball{
 			return new DragonFireball(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
 		}, ['Dragon Fireball', EntityIds::DRAGON_FIREBALL], EntityLegacyIds::DRAGON_FIREBALL);
 
-		$factory->register(FishingHook::class, function(World $world, CompoundTag $nbt) : FishingHook{
+		$factory->register(FishingHook::class, function(World $world, CompoundTag $nbt): FishingHook{
 			return new FishingHook(EntityDataHelper::parseLocation($nbt, $world), null, $nbt);
 		}, ['Fishing Hook', EntityIds::FISHING_HOOK], EntityLegacyIds::FISHING_HOOK);
 
@@ -157,22 +156,23 @@ class Main extends PluginBase{
 
 	private function initBlocks(){
 		$factory = BlockFactory::getInstance();
-		$factory->register(new Door(new BID(Ids::IRON_DOOR_BLOCK, 0, ItemIds::IRON_DOOR), "Iron Door", new BlockBreakInfo(5.0, BlockToolType::PICKAXE, ToolTier::WOOD()->getHarvestLevel(), 25.0)), true);
-		$factory->register(new Coal(new BID(Ids::COAL_BLOCK), "Coal Block"), true);
-		$factory->register(new Lapis(new BID(Ids::LAPIS_BLOCK), "Lapis Block"), true);
+
+		$factory->register(new Door(new BID(Ids::IRON_DOOR_BLOCK, 0), "Iron Door", new BlockBreakInfo(5.0, BlockToolType::PICKAXE, ToolTier::WOOD()->getHarvestLevel(), 25.0)), true);
+		$factory->register(new Coal(new BID(Ids::COAL_BLOCK, 0), "Coal Block", BlockBreakInfo::instant()), true);
+		$factory->register(new Lapis(new BID(Ids::LAPIS_BLOCK, 0), "Lapis Block", BlockBreakInfo::instant()), true);
 
 	}
 
 	private function initItems(){
 		$factory = ItemFactory::getInstance();
 		$factory->register(new class(new ItemIdentifier(ItemIds::SPAWN_EGG, EntityLegacyIds::AGENT), "Agent Spawn Egg") extends SpawnEgg{
-			protected function createEntity(World $world, Vector3 $pos, float $yaw, float $pitch) : Entity{
+			protected function createEntity(World $world, Vector3 $pos, float $yaw, float $pitch): Entity{
 				return new Agent(Location::fromObject($pos, $world, $yaw, $pitch));
 			}
 		});
 
 		$factory->register(new class(new ItemIdentifier(ItemIds::SPAWN_EGG, EntityLegacyIds::LIGHTNING_BOLT), "Lightning Bolt Spawn Egg") extends SpawnEgg{
-			protected function createEntity(World $world, Vector3 $pos, float $yaw, float $pitch) : Entity{
+			protected function createEntity(World $world, Vector3 $pos, float $yaw, float $pitch): Entity{
 				return new LightningBolt(Location::fromObject($pos, $world, $yaw, $pitch));
 			}
 		});
@@ -210,19 +210,19 @@ class Main extends PluginBase{
 		EnchantmentIdMap::getInstance()->register(EnchantmentIds::SHARPNESS, VanillaEnchantments::THORNS());
 	}
 
-	protected function onEnable(){
+	protected function onEnable(): void{
 		date_default_timezone_set("Japan");
 
 		$this->getServer()->getWorldManager()->setAutoSave(false);
 		if(!$this->getServer()->getOnlineMode()){
-			throw new InvalidStateException("This plugin cannot work without xbox auth");
+			//throw new InvalidStateException("This plugin cannot work without xbox auth");
 		}
 
 		$conf = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
 			"development" => false,
 			"server" => [
 				"name" => "KametanServer01",
-				"id" => mt_rand(100000,999999),
+				"id" => mt_rand(100000, 999999),
 			],
 			"spawn" => [
 				"x" => 147,
@@ -239,10 +239,10 @@ class Main extends PluginBase{
 		));
 
 		if($conf->get("server")["id"] === ""){
-			throw new InvalidStateException("Server id not found in configuration file");
+			//throw new InvalidStateException("Server id not found in configuration file");
 		}
 
-		$isDevelopment = (bool) $conf->get("development");
+		$isDevelopment = (bool)$conf->get("development");
 		if($isDevelopment){
 			$this->getLogger()->info("This server is running in development mode!!!!");
 		}
@@ -261,14 +261,14 @@ class Main extends PluginBase{
 		$databaseType = $dbConf["type"];
 		if($databaseType === "mysql"){
 			if($dbConf["host"] === "host"){
-				throw new InvalidStateException("Please configure mysql authentication information in configuration file");
+				//throw new InvalidStateException("Please configure mysql authentication information in configuration file");
 			}
 			$this->database = new MySQL();
 			if(!$this->database->initDatabase($dbConf["host"], $dbConf["username"], $dbConf["password"], $dbConf["dbname"])){
-				throw new InvalidStateException("Cannot connect to mysql server");
+				//throw new InvalidStateException("Cannot connect to mysql server");
 			}
 		}else{
-			throw new InvalidStateException("Unknown database type (".$databaseType.")");
+			//throw new InvalidStateException("Unknown database type (".$databaseType.")");
 		}
 
 		$spawnConf = $conf->get("spawn");
@@ -282,7 +282,7 @@ class Main extends PluginBase{
 		$this->getScheduler()->scheduleRepeatingTask(new MainTask($this), 2); // 0.25s
 	}
 
-	/** @var int  */
+	/** @var int */
 	private $count = 0;
 
 	/**

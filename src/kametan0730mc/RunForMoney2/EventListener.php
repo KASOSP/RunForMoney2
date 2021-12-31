@@ -23,6 +23,7 @@ use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\ListTag;
 use pocketmine\network\mcpe\protocol\PlayerActionPacket;
 use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataFlags;
+use pocketmine\network\mcpe\protocol\types\PlayerAction;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
@@ -38,12 +39,12 @@ class EventListener implements Listener{
 	}
 
 	public function onPlayerJoin(PlayerJoinEvent $event){
-		$event->setJoinMessage(null);
+		$event->setJoinMessage("");
 		UserHandler::getInstance()->joinEvent($event->getPlayer());
 	}
 
 	public function onPlayerQuit(PlayerQuitEvent $event){
-		$event->setQuitMessage(null);
+		$event->setQuitMessage("");
 		UserHandler::getInstance()->quitEvent($event->getPlayer());
 	}
 
@@ -99,10 +100,10 @@ class EventListener implements Listener{
 			$action = $packet->action;
 			$player = $event->getOrigin()->getPlayer();
 			switch($action){
-				case PlayerActionPacket::ACTION_START_SWIMMING:
+				case PlayerAction::START_SWIMMING:
 					$player->getNetworkProperties()->setGenericFlag(EntityMetadataFlags::SWIMMING, true);
 					break;
-				case PlayerActionPacket::ACTION_STOP_SWIMMING:
+				case PlayerAction::STOP_SWIMMING:
 					$player->getNetworkProperties()->setGenericFlag(EntityMetadataFlags::SWIMMING, false);
 					break;
 			}

@@ -25,11 +25,11 @@ class Door extends OriginalDoor{
 		$other = $this->getSide($this->top ? Facing::DOWN : Facing::UP);
 		if($other instanceof Door and $other->isSameType($this)){
 			$other->open = $this->open;
-			$this->pos->getWorld()->setBlock($other->pos, $other);
+			$this->position->getWorld()->setBlock($other->position, $other);
 		}
 
-		$this->pos->getWorld()->setBlock($this->pos, $this);
-		$this->pos->getWorld()->addSound($this->pos, new DoorSound());
+		$this->position->getWorld()->setBlock($this->position, $this);
+		$this->position->getWorld()->addSound($this->position, new DoorSound());
 
 		return false;
 	}
