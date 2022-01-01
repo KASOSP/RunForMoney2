@@ -47,7 +47,7 @@ class LightningTestCommand extends Command{
 
 		/**
 		$pk = new AddActorPacket();
-		$pk->entityRuntimeId = 1000000000;
+		$pk->actorRuntimeId = 1000000000;
 		$pk->type = EntityIds::LIGHTNING_BOLT;
 		$pk->position = $sender->getPosition();
 		$pk->motion = new Vector3(0, 0, 0);

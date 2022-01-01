@@ -28,24 +28,27 @@ use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\convert\SkinAdapterSingleton;
 use pocketmine\network\mcpe\convert\TypeConverter;
 use pocketmine\network\mcpe\protocol\AddPlayerPacket;
+use pocketmine\network\mcpe\protocol\AdventureSettingsPacket;
 use pocketmine\network\mcpe\protocol\PlayerListPacket;
 use pocketmine\network\mcpe\protocol\RemoveActorPacket;
 use pocketmine\network\mcpe\protocol\SetActorDataPacket;
+use pocketmine\network\mcpe\protocol\types\DeviceOS;
 use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataFlags;
 use pocketmine\network\mcpe\protocol\types\entity\EntityMetadataProperties;
 use pocketmine\network\mcpe\protocol\types\entity\FloatMetadataProperty;
 use pocketmine\network\mcpe\protocol\types\entity\LongMetadataProperty;
 use pocketmine\network\mcpe\protocol\types\entity\StringMetadataProperty;
 use pocketmine\network\mcpe\protocol\types\inventory\ItemStack;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStackWrapper;
 use pocketmine\network\mcpe\protocol\types\PlayerListEntry;
 use pocketmine\player\GameMode;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\utils\TextFormat;
-use pocketmine\uuid\UUID;
 use pocketmine\world\particle\FloatingTextParticle;
 use pocketmine\world\sound\AnvilUseSound;
+use Ramsey\Uuid\Uuid;
 
 class UserHandler{
 	use SingletonTrait;
@@ -150,7 +153,7 @@ class UserHandler{
 	public function chatEvent(PlayerChatEvent $event){
 		$player = $event->getPlayer();
 		$tempData = $this->getTempData($player);
-		if(mb_strlen($event->getMessage()) > 30){
+		if(mb_strlen($event->getMessage()) > 60){
 			$this->sendTranslatedMessage($player, "system.chat.tooLong", ERROR);
 			$event->cancel();
 			return;
@@ -183,22 +186,39 @@ class UserHandler{
 		$text = "§a" . $player->getName() . "さんのステータス\n§b逃走成功回数 : " . $clear . " \n§c自首回数  : " . $surrender . "\n" . "§2復活回数  : " . $revival . "\n" . "§d確保された回数 : " . $death . "\n§e所持金 : " . (0) . "\n§1確保した回数 : " . $catch . "\n§aログイン時間(分) : " . (999);
 
 		$entityId = $this->getTempData($player)->userStatusDisplayEntityId;
-		$uuid = UUID::fromRandom();
+		$uuid = Uuid::uuid4();
 		$name = $text;
 		$player->getNetworkSession()->sendDataPacket(PlayerListPacket::add([PlayerListEntry::createAdditionEntry($uuid, $entityId, $name, SkinAdapterSingleton::get()->toSkinData($player->getSkin()))]));
-		$pk = new AddPlayerPacket();
-		$pk->uuid = $uuid;
-		$pk->username = $name;
-		$pk->entityRuntimeId = $entityId;
-		$pk->position = new Vector3(132.5, 73, -236);
-		$pk->item = ItemStack::null();
-		$flags = (
+
+		$actorFlags = (
 			1 << EntityMetadataFlags::IMMOBILE
 		);
-		$pk->metadata = [
-			EntityMetadataProperties::FLAGS => new LongMetadataProperty($flags),
-			EntityMetadataProperties::SCALE => new FloatMetadataProperty(0.01)
+		$actorMetadata = [
+			EntityMetadataProperties::FLAGS => new LongMetadataProperty($actorFlags),
+			EntityMetadataProperties::SCALE => new FloatMetadataProperty(0.01) //zero causes problems on debug builds
 		];
+
+		$text = "§a" . $player->getName() . "さんのステータス\n§b逃走成功回数 : " . $clear . " \n§c自首回数  : " . $surrender . "\n" . "§2復活回数  : " . $revival . "\n" . "§d確保された回数 : " . $death . "\n§e所持金 : " . (0) . "\n§1確保した回数 : " . $catch . "\n§aログイン時間(分) : " . (999);
+
+		$pk = AddPlayerPacket::create(
+			$uuid,
+			$text,
+			$entityId,
+			$entityId,
+			"",
+			new Vector3(132.5, 73, -236),
+			null,
+			0,
+			0,
+			0,
+			ItemStackWrapper::legacy(ItemStack::null()),
+			$actorMetadata,
+			AdventureSettingsPacket::create(0, 0, 0, 0, 0, $entityId),
+			[],
+			"",
+			DeviceOS::UNKNOWN
+		);
+
 		$player->getNetworkSession()->sendDataPacket($pk);
 		$player->getNetworkSession()->sendDataPacket(PlayerListPacket::remove([PlayerListEntry::createRemovalEntry($uuid)]));
 	}

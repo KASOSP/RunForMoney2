@@ -77,6 +77,7 @@ use pocketmine\item\ItemIdentifier;
 use pocketmine\item\ItemIds;
 use pocketmine\item\SpawnEgg;
 use pocketmine\item\ToolTier;
+use pocketmine\item\VanillaItems;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\types\entity\EntityIds;
@@ -164,7 +165,9 @@ class Main extends PluginBase{
 	}
 
 	private function initItems(){
+
 		$factory = ItemFactory::getInstance();
+
 		$factory->register(new class(new ItemIdentifier(ItemIds::SPAWN_EGG, EntityLegacyIds::AGENT), "Agent Spawn Egg") extends SpawnEgg{
 			protected function createEntity(World $world, Vector3 $pos, float $yaw, float $pitch): Entity{
 				return new Agent(Location::fromObject($pos, $world, $yaw, $pitch));
@@ -204,6 +207,9 @@ class Main extends PluginBase{
 		$factory->register(new Tejyou(new ItemIdentifier(1050, 0), "Tejyou"));
 		$factory->register(new Vaccine(new ItemIdentifier(1060, 0), "Vaccine"));
 		$factory->register(new MenuPad(new ItemIdentifier(1070, 0), "Menu Pad"));
+
+		//VanillaItems::register("menu_pad", new MenuPad(new ItemIdentifier(1070, 0)));
+
 	}
 
 	private function initEnchantment(){
